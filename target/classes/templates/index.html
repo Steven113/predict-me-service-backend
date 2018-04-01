@@ -8,16 +8,11 @@
 	Hello ${name}
 
 	<form name="DropDownItemSelection" action="http://${ip}:${port}/submitShoppingData">
-		<#assign n = maxNumItemsForShoppingList>
-		<#list 1..n as i>
-			<select name="ShoppingItem${i}">
 			
-				<#list allowedShoppingItemList as item>
-				     <option value="${item}">${item}</option>
-				</#list>
-			</select> 
-			<br>
+		<#list allowedShoppingItemList as item>
+		     <input type="checkbox" name="${item}" value="">${item}<br>
 		</#list>
+		<br>
 		<input type="submit" value="Submit">
 	</form>
 </body>

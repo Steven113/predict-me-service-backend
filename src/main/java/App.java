@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bson.Document;
+
 import freemarker.template.TemplateException;
 
 public class App {
@@ -45,6 +47,10 @@ public class App {
 	
 	public static void putObjectInMongoDBCollection(MongoDBDocumentCompatibleObject object) {
 		mongoDBConnector.insertObjectIntoCollectionAsObject(predictionAppConfig.getMongodbCollectionName(), object);
+	}
+	
+	public static Document [] getAllDocumentsFromCollection(String collectionName) {
+		return mongoDBConnector.getAllDocumentsFromCollection(collectionName);
 	}
 
 	

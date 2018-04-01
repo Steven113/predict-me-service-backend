@@ -9,7 +9,9 @@ import freemarker.template.TemplateException;
 import spark.Route;
 
 public class AppRoutes {
-
+	
+	static UserSelectedShoppingItemsFactory userSelectedShoppingItemsFactory = new UserSelectedShoppingItemsFactory();
+	
 	public static Route userShoppingListFormPage = (req, res) -> {
 		PredictionAppConfig predictionAppConfig = App.getPredictionAppConfig();
 		
@@ -34,11 +36,9 @@ public class AppRoutes {
 	public static Route dataSubmissionPage = (req,res) -> {
 		LinkedList<String> userProvidedItems = new LinkedList<>();
 		
-		userProvidedItems.add(req.queryParams("ShoppingItem1"));
-		userProvidedItems.add(req.queryParams("ShoppingItem2"));
-		userProvidedItems.add(req.queryParams("ShoppingItem3"));
-		userProvidedItems.add(req.queryParams("ShoppingItem4"));
-		userProvidedItems.add(req.queryParams("ShoppingItem5"));
+		for (String queryParamName : req.queryParams()) {
+			userProvidedItems.add(queryParamName);
+		}
 		
 		UserSelectedShoppingItems userSelectedShoppingItems = new UserSelectedShoppingItems(userProvidedItems);
 		

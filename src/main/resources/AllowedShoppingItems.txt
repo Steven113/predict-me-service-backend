@@ -1,4 +1,3 @@
-None
 Milk
 Coca-Cola
 Fruit Juice
@@ -18,4 +17,3 @@ Meat
 Fruit
 Vegetables
 Vegetarian Meat Alternatives
-You Tell Me

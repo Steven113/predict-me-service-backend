@@ -1,7 +1,9 @@
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.bson.Document;
 
+import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -27,6 +29,25 @@ public class MongoDBManager {
 			System.err.println("MongoDB insertion error");
 			System.out.println(e);
 		}
+		
+		
+	}
+	
+	public Document [] getAllDocumentsFromCollection(String collectionName) {
+		LinkedList<Document> documentsInCollection = new LinkedList<>();
+		
+		MongoCollection<Document> collectionDocuments = getCollectionFromDatabase(collectionName);
+		
+		//frustratingly convoluted way to put documents into LinkedList
+		collectionDocuments.find().forEach(new Block<Document>() {
+		       @Override
+		       public void apply(final Document document) {
+		    	   documentsInCollection.add(document);
+		       }
+		});
+		
+		return documentsInCollection.toArray(new Document[0]);
+		
 	}
 
 }
