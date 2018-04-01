@@ -47,7 +47,7 @@ public class Main {
 			e.printStackTrace();
 		}
     	
-        
+        get(ServerURLs.Web.USER_DATA_SUBMIT_PAGE, "application/json", (req,res) -> "Data submitted");
     }
 
 	private static void extractDataFromCommandLineArguments() {

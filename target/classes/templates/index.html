@@ -7,14 +7,16 @@
 <body>
 	Hello ${name}
 
-	<form action="${ip}:${port}/action_page.php">
-		<select name="ShoppingItem1">
-			<option value="Milk">Milk</option>
-		
-		<#list allowedShoppingItemList as item>
-		     <option value="${item}">${item}</option>
+	<form name="DropDownItemSelection" action="http://${ip}:${port}/submitShoppingData">
+		<#list [1,2,3,4,5,6,7,8,9,10] as item>
+			<select name="ShoppingItem${item}">
+			
+				<#list allowedShoppingItemList as item>
+				     <option value="${item}">${item}</option>
+				</#list>
+			</select> 
+			<br>
 		</#list>
-		</select>
 		<input type="submit" value="Submit">
 	</form>
 </body>
