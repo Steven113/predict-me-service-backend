@@ -1,3 +1,4 @@
+package CommandLineTools;
 
 public class ValidatedCommandLineOptions extends CommandLineOptions {
 	ICommandLineOptionsValidator commandLineOptionsValidator;

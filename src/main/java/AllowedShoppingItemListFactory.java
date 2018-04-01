@@ -2,6 +2,8 @@
 import java.io.IOException;
 import java.util.List;
 
+import FileUtils.FileUtils;
+
 public final class AllowedShoppingItemListFactory {
 
 	public static AllowedShoppingItemList generateAllowedShoppingItemListFromFile(String filePath) throws IOException {
