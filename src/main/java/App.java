@@ -6,9 +6,11 @@ import java.util.Map;
 
 import freemarker.template.TemplateException;
 
-public class Main {
+public class App {
 	
 	private static PredictionAppConfig predictionAppConfig = null;
+	
+	private static MongoDBManager mongoDBConnector = null;
 	
     public static void main(String[] args) {
     	
@@ -21,18 +23,28 @@ public class Main {
     		System.out.println("App config successful");
     	}
     	
+    	mongoDBConnector = new MongoDBManager(predictionAppConfig.getMongoDBHost(), predictionAppConfig.getMongoDBPort(), predictionAppConfig.getMongodbDatabaseName());
+    	
     	staticFiles.location("/public");
     	staticFiles.expireTime(600L);
     	
     	port(predictionAppConfig.getPortToRunServerOn());
     	
-    	get(ServerURLs.Web.WELCOME_PAGE, AppRoutes.userShoppingListFormPage);
+    	AppRoutes.setRouteToRespondToGetterRequest(ServerURLs.Web.WELCOME_PAGE, AppRoutes.userShoppingListFormPage);
     	
-        get(ServerURLs.Web.USER_DATA_SUBMIT_PAGE, "application/json", AppRoutes.dataSubmissionPage);
+        AppRoutes.setRouteToRespondToGetterRequest(ServerURLs.Web.USER_DATA_SUBMIT_PAGE, "application/json", AppRoutes.dataSubmissionPage);
     }
 
 	public static PredictionAppConfig getPredictionAppConfig() {
 		return predictionAppConfig;
+	}
+
+	public static MongoDBManager getMongoDBConnector() {
+		return mongoDBConnector;
+	}
+	
+	public static void putObjectInMongoDBCollection(MongoDBDocumentCompatibleObject object) {
+		mongoDBConnector.insertObjectIntoCollectionAsObject(predictionAppConfig.getMongodbCollectionName(), object);
 	}
 
 	

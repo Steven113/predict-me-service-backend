@@ -16,6 +16,14 @@ public class PredictionAppConfig {
 	
 	private boolean argsAreValid = true;
 	
+	private String mongoDBHost = "";
+	
+	private int mongoDBPort = 0;
+	
+	private String mongodbDatabaseName = "";
+	
+	private String mongodbCollectionName = "";
+	
 	public PredictionAppConfig(String [] commandLineArgs) {
 		commandLineOptions = new CommandLineOptions(commandLineArgs);
     	
@@ -44,6 +52,14 @@ public class PredictionAppConfig {
 			e.printStackTrace();
 			System.exit(-1);
 		}
+    	
+    	mongoDBPort = Integer.parseInt(commandLineOptions.getValueOfParameter("mongodbport").get(0));
+    	
+    	mongoDBHost = (commandLineOptions.getValueOfParameter("mongodbhost").get(0));
+    	
+    	mongodbDatabaseName = (commandLineOptions.getValueOfParameter("mongodbDatabaseName").get(0));
+    	
+    	mongodbCollectionName = (commandLineOptions.getValueOfParameter("mongodbCollectionName").get(0));
 	}
 	
 	private boolean validateCommandLineArguments() {
@@ -64,6 +80,26 @@ public class PredictionAppConfig {
     	
     	if(!commandLineOptions.hasParameterWithKAttributes("pathToAllowedShoppingItems", 1)) {
     		System.out.println("You have not specified the path to the file with the allowed shopping items. Please add the argument -pathToAllowedShoppingItems [path to file with allowed shopping items]");
+    		return false;
+    	}
+    	
+    	if(!commandLineOptions.hasParameterWithKAttributes("mongodbhost", 1)) {
+    		System.out.println("You have not specified the hostname of the mongodb server. Please add the argument -mongodbhost [hostname for mongodb server]");
+    		return false;
+    	}
+    	
+    	if(!commandLineOptions.hasParameterWithKAttributes("mongodbport", 1)) {
+    		System.out.println("You have not specified the port the mongodb server is running on. Please add the argument -mongodbport [port mongodb server is running on]");
+    		return false;
+    	}
+    	
+    	if(!commandLineOptions.hasParameterWithKAttributes("mongodbDatabaseName", 1)) {
+    		System.out.println("You have not specified the name of the mongodb database. Please add the argument -mongodbDatabaseName [mongodb database name]");
+    		return false;
+    	}
+    	
+    	if(!commandLineOptions.hasParameterWithKAttributes("mongodbCollectionName", 1)) {
+    		System.out.println("You have not specified the name of the collection to use from the mongodb database. Please add the argument -mongodbCollectionName [mongodb collection name]");
     		return false;
     	}
     	
@@ -90,6 +126,7 @@ public class PredictionAppConfig {
 		return htmlTemplatingEngineInstance;
 	}
 
+	
 
 	public AllowedShoppingItemList getAllowedShoppingItemList() {
 		return allowedShoppingItemList;
@@ -98,6 +135,26 @@ public class PredictionAppConfig {
 
 	public boolean appArgsAreValid() {
 		return argsAreValid;
+	}
+
+
+	public String getMongoDBHost() {
+		return mongoDBHost;
+	}
+
+
+	public int getMongoDBPort() {
+		return mongoDBPort;
+	}
+
+
+	public String getMongodbDatabaseName() {
+		return mongodbDatabaseName;
+	}
+
+
+	public String getMongodbCollectionName() {
+		return mongodbCollectionName;
 	}
 	
 	

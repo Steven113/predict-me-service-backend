@@ -43,9 +43,9 @@
   		<version>2.3.20</version>
   	</dependency>
   	<dependency>
-  		<groupId>nz.ac.waikato.cms.moa</groupId>
-  		<artifactId>moa</artifactId>
-  		<version>2017.06</version>
+  		<groupId>org.mongodb</groupId>
+  		<artifactId>mongodb-driver</artifactId>
+  		<version>3.6.3</version>
   	</dependency>
   </dependencies>
 </project>
