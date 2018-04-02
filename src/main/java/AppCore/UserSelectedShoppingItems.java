@@ -13,21 +13,21 @@ public class UserSelectedShoppingItems implements MongoDBDocumentCompatibleObjec
 	
 	private HashSet<String> chosenItems = new HashSet<>();
 	
-	private int dayOfWeek;
+	private DayOfWeek dayOfWeek = DayOfWeek.Invalid_Day;
 	
 	public UserSelectedShoppingItems(LinkedList<String> selectedItems) {
 		for (String item : selectedItems) {
 			chosenItems.add(item);
 		}
 		
-		dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+		dayOfWeek = DayOfWeek.getDayOfWeek(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
 	}
 	
 	public UserSelectedShoppingItems(HashSet<String> itemCounts) {
 		this.chosenItems = new HashSet<>(itemCounts);
 	}
 	
-	public UserSelectedShoppingItems(HashSet<String> itemCounts, int dayOfWeek) {
+	public UserSelectedShoppingItems(HashSet<String> itemCounts, DayOfWeek dayOfWeek) {
 		this.chosenItems = new HashSet<>(itemCounts);
 		this.dayOfWeek = dayOfWeek;
 	}
@@ -51,7 +51,7 @@ public class UserSelectedShoppingItems implements MongoDBDocumentCompatibleObjec
 			documentGeneratedFromObject.append(item, 1);
 		}
 		
-		documentGeneratedFromObject.append("DayOfWeek", dayOfWeek);
+		documentGeneratedFromObject.append("DayOfWeek", dayOfWeek.toString());
 		
 		return documentGeneratedFromObject;
 	}
@@ -65,7 +65,7 @@ public class UserSelectedShoppingItems implements MongoDBDocumentCompatibleObjec
 		return new HashSet<String>(chosenItems);
 	}
 
-	public int getDayOfWeek() {
+	public DayOfWeek getDayOfWeek() {
 		return dayOfWeek;
 	}
 

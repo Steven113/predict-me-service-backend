@@ -28,7 +28,6 @@ public class AppRoutes {
 		PredictionAppConfig predictionAppConfig = App.getPredictionAppConfig();
 		
 		Map values = new HashMap();
-    	values.put("name", "steven");
     	values.put("ip", predictionAppConfig.getServerIP());
     	values.put("port", Integer.toString(predictionAppConfig.getPortToRunServerOn()));
     	values.put("allowedShoppingItemList", predictionAppConfig.getAllowedShoppingItemList().getAllAllowedShoppingItems());
@@ -68,11 +67,27 @@ public class AppRoutes {
 		
 		RuleSet<Item> associationRules = associationRuleGenerator.getAssociationRules();
 		
-		System.out.println(String.format("frequentItemSets: %s", frequentItemSets.toString()));
+		PredictionAppConfig predictionAppConfig = App.getPredictionAppConfig();
 		
-		System.out.println(String.format("associationRules: %s", associationRules.toString()));
+		FrequentlyPurchasedShoppingItemSet [] frequentlyPurchasedShoppingItemSets = FrequentlyPurchasedShoppingItemSetFactory.generateFrequentlyPurchasedShoppingItemSet(frequentItemSets);
 		
-		return "Data submitted";
+		AssociationRuleForShoppingItems [] associationRulesForShoppingItemSets = AssociationRuleForShoppingItemsFactory.generateAssociationRulesForShoppingItemSets(associationRules);
+		
+		Map values = new HashMap();
+    	values.put("ip", predictionAppConfig.getServerIP());
+    	values.put("port", Integer.toString(predictionAppConfig.getPortToRunServerOn()));
+    	values.put("frequentItemSets", frequentlyPurchasedShoppingItemSets);
+		values.put("associationRules", associationRulesForShoppingItemSets);
+    	
+    	try {
+			String htmlFilledIn = predictionAppConfig.getHtmlTemplatingEngineInstance().generateTemplatedHTML("ItemPredictions.html", values);
+			return htmlFilledIn;
+		} catch (TemplateException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			return "Internal server error";
+		}
 	};
 	
 	public static void setRouteToRespondToGetterRequest(String serverPath, Route routeToRespond) {

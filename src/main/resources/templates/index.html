@@ -2,18 +2,18 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Prediction Service - Enter the items you purchased today</title>
 </head>
 <body>
 	Hello! Welcome to my data mining experiment!
 
-	<form name="DropDownItemSelection" action="http://${ip}:${port}/submitShoppingData">
-			
-		<#list allowedShoppingItemList as item>
-		     <input type="checkbox" name="${item}" value="">${item}<br>
+	<form name="DropDownItemSelection"
+		action="http://${ip}:${port}/submitShoppingData">
+
+		<#list allowedShoppingItemList as item> <input type="checkbox"
+			name="${item}" value="">${item}<br>
 		</#list>
-		<br>
-		<input type="submit" value="Submit">
+		<br> <input type="submit" value="Submit">
 	</form>
 </body>
 </html>

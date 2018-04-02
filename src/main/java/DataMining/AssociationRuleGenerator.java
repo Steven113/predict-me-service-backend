@@ -60,9 +60,9 @@ private MessageDigest digest = null;
 		}
 		
 		double minSupport = 0.5;
-		double minConfidence = 1.0;
-		int ruleCount = 10;
-		Apriori<Item> apriori = new Apriori.Builder<Item>(minSupport).generateRules(ruleCount).confidenceDelta(0.1).minConfidence(minConfidence).create();
+		double minConfidence = 0.95;
+		int ruleCount = 15;
+		Apriori<Item> apriori = new Apriori.Builder<Item>(minSupport).generateRules(minConfidence).confidenceDelta(0.1).create();
 		
 		ShoppingAprioriDataIterable shoppingAprioriDataIterable = new ShoppingAprioriDataIterable(
 				shoppingAprioriTransactionsArrayList);
@@ -70,6 +70,8 @@ private MessageDigest digest = null;
 		Iterable<Transaction<Item>> iterable = shoppingAprioriDataIterable;
 		Output<Item> output = apriori.execute(iterable);
 		associationRules = output.getRuleSet();
+		
+		System.out.println(String.format("associationRules: %s", associationRules.toString()));
 	}
 
 	public RuleSet<Item> getAssociationRules() {

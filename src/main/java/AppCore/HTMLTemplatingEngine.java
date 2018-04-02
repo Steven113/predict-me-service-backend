@@ -55,7 +55,7 @@ public class HTMLTemplatingEngine {
 	public String generateTemplatedHTML(String templatePath, Map values) throws TemplateException, IOException {
 		Map root = new HashMap(values);
         
-        Template temp = cfg.getTemplate("index.html");
+        Template temp = cfg.getTemplate(templatePath);
 
         /* Merge data-model with template */
         Writer out = new StringWriter();

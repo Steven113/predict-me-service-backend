@@ -13,12 +13,12 @@ public class UserSelectedShoppingItemsFactory implements MongoDBObjectFactory<Us
 	public UserSelectedShoppingItems generateObjectFromDocument(Document document) {
 		HashSet<String> chosenItems = new HashSet<>();
 		
-		int dayOfWeek = 0;
+		DayOfWeek dayOfWeek = DayOfWeek.Invalid_Day;
 		
 		for (String key : document.keySet()) {
 			if (!key.equals("_id")) {
 				if (key.equals("DayOfWeek")) {
-					dayOfWeek = document.getInteger("DayOfWeek");
+					dayOfWeek = DayOfWeek.getDayOfWeekFromString(document.getString("DayOfWeek"));
 				} else {
 					chosenItems.add(key);
 				}
