@@ -49,8 +49,8 @@ public class App {
 		mongoDBConnector.insertObjectIntoCollectionAsObject(predictionAppConfig.getMongodbCollectionName(), object);
 	}
 	
-	public static Document [] getAllDocumentsFromCollection(String collectionName) {
-		return mongoDBConnector.getAllDocumentsFromCollection(collectionName);
+	public static Document [] getAllDocumentsFromCollection() {
+		return mongoDBConnector.getAllDocumentsFromCollection(predictionAppConfig.getMongodbCollectionName());
 	}
 
 	

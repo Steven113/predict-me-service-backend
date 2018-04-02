@@ -24,5 +24,15 @@ public class UserSelectedShoppingItemsFactory implements MongoDBObjectFactory<Us
 		
 		return new UserSelectedShoppingItems(chosenItems, dayOfWeek);
 	}
+	
+	public UserSelectedShoppingItems [] getArrayOfUserSelectedShoppingItemsFromArrayOfDocuments(Document [] documents) {
+		UserSelectedShoppingItems [] result = new UserSelectedShoppingItems[documents.length];
+		
+		for (int n = 0; n<documents.length; ++n) {
+			result[n] = generateObjectFromDocument(documents[n]);
+		}
+		
+		return result;
+	}
 
 }

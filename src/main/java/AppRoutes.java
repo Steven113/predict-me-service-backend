@@ -1,16 +1,22 @@
 import static spark.Spark.*;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
+import de.mrapp.apriori.FrequentItemSets;
+import de.mrapp.apriori.Item;
 import freemarker.template.TemplateException;
 import spark.Route;
 
 public class AppRoutes {
 	
-	static UserSelectedShoppingItemsFactory userSelectedShoppingItemsFactory = new UserSelectedShoppingItemsFactory();
+	private static UserSelectedShoppingItemsFactory userSelectedShoppingItemsFactory = new UserSelectedShoppingItemsFactory();
+	
+	private static FrequentItemSetGenerator frequentItemSetGenerator = new FrequentItemSetGenerator();
 	
 	public static Route userShoppingListFormPage = (req, res) -> {
 		PredictionAppConfig predictionAppConfig = App.getPredictionAppConfig();
@@ -43,6 +49,14 @@ public class AppRoutes {
 		UserSelectedShoppingItems userSelectedShoppingItems = new UserSelectedShoppingItems(userProvidedItems);
 		
 		App.putObjectInMongoDBCollection(userSelectedShoppingItems);
+		
+		UserSelectedShoppingItems [] userSelectedShoppingItemsFromDB = userSelectedShoppingItemsFactory.getArrayOfUserSelectedShoppingItemsFromArrayOfDocuments(App.getAllDocumentsFromCollection());
+		
+		LinkedList<UserSelectedShoppingItems> userSelectedShoppingItemsFromDBAsList = new LinkedList(Arrays.asList(userSelectedShoppingItemsFromDB));
+		
+		frequentItemSetGenerator.updateFrequentItemSets(userSelectedShoppingItemsFromDBAsList);
+		
+		FrequentItemSets<Item> frequentItemSets = frequentItemSetGenerator.getFrequentItemSets();
 		
 		return "Data submitted";
 	};

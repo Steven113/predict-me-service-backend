@@ -52,5 +52,18 @@ public class UserSelectedShoppingItems implements MongoDBDocumentCompatibleObjec
 		
 		return documentGeneratedFromObject;
 	}
+	
+	@Override
+	public String toString() {
+		return(chosenItems.toString() + dayOfWeek);
+	}
+
+	public HashSet<String> getChosenItems() {
+		return new HashSet<String>(chosenItems);
+	}
+
+	public int getDayOfWeek() {
+		return dayOfWeek;
+	}
 
 }

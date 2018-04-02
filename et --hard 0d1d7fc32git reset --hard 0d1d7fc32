@@ -1,0 +1,23 @@
+[33mcommit 7a52af1abf8381d5584cbe12430b6b7911f6093a[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Steven Tupper <steven.arthur.tupper@gmail.com>
+Date:   Mon Apr 2 00:25:20 2018 +0200
+
+    Changed index.html to have a checklist of items. Added code to submit user item selection and save it to a MongoDB collection. Added code to retrieve user shopping lists from MongoDB collection.
+
+[33mcommit f665c83077fb73538d24e96ac052187ef96b620d[m
+Author: Steven Tupper <steven.arthur.tupper@gmail.com>
+Date:   Sun Apr 1 19:27:36 2018 +0200
+
+    Added MongoDBManager for opening a connection to a certain database at a certain IP and port, and inserting into a collection. Added a MonoDBDocumentCompatibleObject interface to let objects specify that they can be converted to MongoDBDocuments. The interface was chosen over a factory to give the person writing the class control over what fields can be put in the document. When a user submits a list of shopping items, the list is put in a UserSelectedShoppingItems object and then turned into a Document and put into the given collection. Renamed Main class to App for slightly better clarity.
+
+[33mcommit b4464e9cc2fb4a68d945dce8f6824f901892b441[m
+Author: Steven Tupper <steven.arthur.tupper@gmail.com>
+Date:   Sun Apr 1 15:53:11 2018 +0200
+
+    Refactored code to divide classes into packages. Moved configuration from Main class into a seperate class instantiated from the Main class. The Routes are now in a seperate class that loads the configuration information from the Main class and exposes the Routes to the Main class.
+
+[33mcommit 142ef9bb94ce0b2fc287c68ef76fcb60b2bd9993[m
+Author: Steven Tupper <steven.arthur.tupper@gmail.com>
+Date:   Sun Apr 1 13:54:13 2018 +0200
+
+    Got form to submit data to server
