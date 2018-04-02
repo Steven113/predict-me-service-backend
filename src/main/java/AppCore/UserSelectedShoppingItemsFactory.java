@@ -1,7 +1,10 @@
+package AppCore;
 import java.util.HashMap;
 import java.util.HashSet;
 
 import org.bson.Document;
+
+import DataMining.MongoDBObjectFactory;
 
 public class UserSelectedShoppingItemsFactory implements MongoDBObjectFactory<UserSelectedShoppingItems>{
 

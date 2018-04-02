@@ -1,3 +1,4 @@
+package AppCore;
 import java.util.Arrays;
 
 public class AllowedShoppingItemList {

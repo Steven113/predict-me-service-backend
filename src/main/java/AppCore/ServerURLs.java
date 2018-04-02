@@ -1,3 +1,4 @@
+package AppCore;
 
 public class ServerURLs {
 	public static class Web {

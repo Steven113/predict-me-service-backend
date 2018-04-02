@@ -8,6 +8,9 @@ import java.util.Random;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
+import AppCore.UserSelectedShoppingItems;
+import AppCore.UserSelectedShoppingItemsFactory;
+
 class TestMongoDBDocumentConversions {
 	
 	@Test

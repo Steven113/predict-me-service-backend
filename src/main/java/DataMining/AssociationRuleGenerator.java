@@ -1,21 +1,24 @@
+package DataMining;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
+import AppCore.UserSelectedShoppingItems;
 import de.mrapp.apriori.Apriori;
 import de.mrapp.apriori.FrequentItemSets;
 import de.mrapp.apriori.Item;
 import de.mrapp.apriori.Output;
+import de.mrapp.apriori.RuleSet;
 import de.mrapp.apriori.Transaction;
 
-public class FrequentItemSetGenerator {
-	private MessageDigest digest = null;
+public class AssociationRuleGenerator {
+	
+private MessageDigest digest = null;
 	
 	private String hashOfCurrentData = "";
 	
-	private FrequentItemSets<Item> frequentItemSets = null;
+	private RuleSet<Item> associationRules = null;
 	
 	private void generateSHA256Digest() {
 		try {
@@ -26,17 +29,16 @@ public class FrequentItemSetGenerator {
 		}
 	}
 	
-	public FrequentItemSetGenerator() {
+	public AssociationRuleGenerator() {
 		generateSHA256Digest();
 	}
 	
-	public FrequentItemSetGenerator(LinkedList<UserSelectedShoppingItems> allUserSelectedShoppingItemLists) {
+	public AssociationRuleGenerator(LinkedList<UserSelectedShoppingItems> allUserSelectedShoppingItemLists) {
 		generateSHA256Digest();
-		
-		updateFrequentItemSets(allUserSelectedShoppingItemLists);
+		updateAssociationRules(allUserSelectedShoppingItemLists);
 	}
-
-	public void updateFrequentItemSets(LinkedList<UserSelectedShoppingItems> allUserSelectedShoppingItemLists) {
+	
+	public void updateAssociationRules(LinkedList<UserSelectedShoppingItems> allUserSelectedShoppingItemLists) {
 		digest.reset();
 		
 		byte [] hashBytes = digest.digest((allUserSelectedShoppingItemLists).toString().getBytes());
@@ -49,9 +51,6 @@ public class FrequentItemSetGenerator {
 			hashOfCurrentData = new String(hashOfNewData);
 		}
 		
-		int numRulesToRetrieve = 5;
-		Apriori<Item> apriori = new Apriori.Builder<Item>(numRulesToRetrieve).create();
-		
 		ArrayList<Transaction<Item>> shoppingAprioriTransactionsArrayList = new ArrayList<Transaction<Item>>(allUserSelectedShoppingItemLists.size());
 		
 		Object [] arrayOfShoppingAprioriTransacction = allUserSelectedShoppingItemLists.stream().map(ShoppingAprioriTransaction::new).toArray();
@@ -60,17 +59,21 @@ public class FrequentItemSetGenerator {
 			shoppingAprioriTransactionsArrayList.add((ShoppingAprioriTransaction)shoppingAprioriTransactionItem);
 		}
 		
-		ShoppingAprioriDataIterable shoppingAprioriDataIterable = new ShoppingAprioriDataIterable(shoppingAprioriTransactionsArrayList);
+		double minSupport = 0.5;
+		double minConfidence = 1.0;
+		int ruleCount = 10;
+		Apriori<Item> apriori = new Apriori.Builder<Item>(minSupport).generateRules(ruleCount).confidenceDelta(0.1).minConfidence(minConfidence).create();
 		
-		Iterable<Transaction<Item>> iterable = shoppingAprioriTransactionsArrayList;
+		ShoppingAprioriDataIterable shoppingAprioriDataIterable = new ShoppingAprioriDataIterable(
+				shoppingAprioriTransactionsArrayList);
+		
+		Iterable<Transaction<Item>> iterable = shoppingAprioriDataIterable;
 		Output<Item> output = apriori.execute(iterable);
-		frequentItemSets = output.getFrequentItemSets();
-		
-		System.out.println(String.format("frequentItemSets: %s", frequentItemSets.toString()));
+		associationRules = output.getRuleSet();
 	}
 
-	public FrequentItemSets<Item> getFrequentItemSets() {
-		return frequentItemSets;
+	public RuleSet<Item> getAssociationRules() {
+		return associationRules;
 	}
 
 }

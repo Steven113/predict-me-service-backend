@@ -1,3 +1,4 @@
+package AppCore;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -5,6 +6,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 import org.bson.Document;
+
+import DataMining.MongoDBDocumentCompatibleObject;
 
 public class UserSelectedShoppingItems implements MongoDBDocumentCompatibleObject {
 	

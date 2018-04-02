@@ -1,3 +1,4 @@
+package DataMining;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -12,7 +13,7 @@ public class MongoDBManager {
 	private MongoClient mongoClient = null;
 	private MongoDatabase mongoDatabase = null;
 	
-	MongoDBManager(String mongoDBServerIP, int mongoDBServerPort, String mongoDatabaseName) {
+	public MongoDBManager(String mongoDBServerIP, int mongoDBServerPort, String mongoDatabaseName) {
 		mongoClient = new MongoClient(mongoDBServerIP, mongoDBServerPort);
 		mongoDatabase = mongoClient.getDatabase(mongoDatabaseName);
 	}

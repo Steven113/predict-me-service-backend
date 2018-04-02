@@ -1,3 +1,4 @@
+package DataMining;
 import de.mrapp.apriori.Item;
 
 public class ShoppingAprioriItem implements Item {

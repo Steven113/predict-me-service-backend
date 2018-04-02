@@ -1,3 +1,4 @@
+package DataMining;
 import org.bson.Document;
 
 public interface MongoDBObjectFactory<T> {

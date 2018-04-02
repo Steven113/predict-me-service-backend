@@ -1,3 +1,4 @@
+package AppCore;
 import java.io.IOException;
 
 import CommandLineTools.CommandLineOptions;

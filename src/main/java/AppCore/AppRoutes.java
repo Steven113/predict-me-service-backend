@@ -1,3 +1,4 @@
+package AppCore;
 import static spark.Spark.*;
 
 import java.io.IOException;
@@ -7,8 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import DataMining.AssociationRuleGenerator;
+import DataMining.FrequentItemSetGenerator;
 import de.mrapp.apriori.FrequentItemSets;
 import de.mrapp.apriori.Item;
+import de.mrapp.apriori.RuleSet;
 import freemarker.template.TemplateException;
 import spark.Route;
 
@@ -17,6 +21,8 @@ public class AppRoutes {
 	private static UserSelectedShoppingItemsFactory userSelectedShoppingItemsFactory = new UserSelectedShoppingItemsFactory();
 	
 	private static FrequentItemSetGenerator frequentItemSetGenerator = new FrequentItemSetGenerator();
+	
+	private static AssociationRuleGenerator associationRuleGenerator = new AssociationRuleGenerator();
 	
 	public static Route userShoppingListFormPage = (req, res) -> {
 		PredictionAppConfig predictionAppConfig = App.getPredictionAppConfig();
@@ -57,6 +63,14 @@ public class AppRoutes {
 		frequentItemSetGenerator.updateFrequentItemSets(userSelectedShoppingItemsFromDBAsList);
 		
 		FrequentItemSets<Item> frequentItemSets = frequentItemSetGenerator.getFrequentItemSets();
+		
+		associationRuleGenerator.updateAssociationRules(userSelectedShoppingItemsFromDBAsList);
+		
+		RuleSet<Item> associationRules = associationRuleGenerator.getAssociationRules();
+		
+		System.out.println(String.format("frequentItemSets: %s", frequentItemSets.toString()));
+		
+		System.out.println(String.format("associationRules: %s", associationRules.toString()));
 		
 		return "Data submitted";
 	};

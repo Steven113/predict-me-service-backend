@@ -1,3 +1,4 @@
+package AppCore;
 import static spark.Spark.*;
 
 import java.io.IOException;
@@ -6,6 +7,8 @@ import java.util.Map;
 
 import org.bson.Document;
 
+import DataMining.MongoDBDocumentCompatibleObject;
+import DataMining.MongoDBManager;
 import freemarker.template.TemplateException;
 
 public class App {

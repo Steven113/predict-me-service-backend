@@ -1,7 +1,9 @@
+package DataMining;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import AppCore.UserSelectedShoppingItems;
 import de.mrapp.apriori.Item;
 import de.mrapp.apriori.Transaction;
 
