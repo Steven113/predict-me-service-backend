@@ -32,13 +32,13 @@ public class FrequentItemSetGenerator {
 		generateSHA256Digest();
 	}
 
-	public FrequentItemSetGenerator(LinkedList<UserSelectedShoppingItems> allUserSelectedShoppingItemLists) {
+	public FrequentItemSetGenerator(UserSelectedShoppingItems [] allUserSelectedShoppingItemLists) {
 		generateSHA256Digest();
 
 		updateFrequentItemSets(allUserSelectedShoppingItemLists);
 	}
 
-	public void updateFrequentItemSets(LinkedList<UserSelectedShoppingItems> allUserSelectedShoppingItemLists) {
+	public void updateFrequentItemSets(UserSelectedShoppingItems [] allUserSelectedShoppingItemLists) {
 		digest.reset();
 
 		byte[] hashBytes = digest.digest((allUserSelectedShoppingItemLists).toString().getBytes());
@@ -52,13 +52,10 @@ public class FrequentItemSetGenerator {
 		}
 
 		ArrayList<Transaction<Item>> shoppingAprioriTransactionsArrayList = new ArrayList<Transaction<Item>>(
-				allUserSelectedShoppingItemLists.size());
-
-		Object[] arrayOfShoppingAprioriTransacction = allUserSelectedShoppingItemLists.stream()
-				.map(ShoppingAprioriTransaction::new).toArray();
-
-		for (Object shoppingAprioriTransactionItem : arrayOfShoppingAprioriTransacction) {
-			shoppingAprioriTransactionsArrayList.add((ShoppingAprioriTransaction) shoppingAprioriTransactionItem);
+				allUserSelectedShoppingItemLists.length);
+		
+		for (UserSelectedShoppingItems userSelectedShoppingItems : allUserSelectedShoppingItemLists) {
+			shoppingAprioriTransactionsArrayList.add(new ShoppingAprioriTransaction(userSelectedShoppingItems));
 		}
 
 		int numRulesToRetrieve = 5;

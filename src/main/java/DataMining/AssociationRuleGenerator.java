@@ -33,12 +33,12 @@ private MessageDigest digest = null;
 		generateSHA256Digest();
 	}
 	
-	public AssociationRuleGenerator(LinkedList<UserSelectedShoppingItems> allUserSelectedShoppingItemLists) {
+	public AssociationRuleGenerator(UserSelectedShoppingItems [] allUserSelectedShoppingItemLists) {
 		generateSHA256Digest();
 		updateAssociationRules(allUserSelectedShoppingItemLists);
 	}
 	
-	public void updateAssociationRules(LinkedList<UserSelectedShoppingItems> allUserSelectedShoppingItemLists) {
+	public void updateAssociationRules(UserSelectedShoppingItems [] allUserSelectedShoppingItemLists) {
 		digest.reset();
 		
 		byte [] hashBytes = digest.digest((allUserSelectedShoppingItemLists).toString().getBytes());
@@ -51,18 +51,17 @@ private MessageDigest digest = null;
 			hashOfCurrentData = new String(hashOfNewData);
 		}
 		
-		ArrayList<Transaction<Item>> shoppingAprioriTransactionsArrayList = new ArrayList<Transaction<Item>>(allUserSelectedShoppingItemLists.size());
+		ArrayList<Transaction<Item>> shoppingAprioriTransactionsArrayList = new ArrayList<Transaction<Item>>(
+				allUserSelectedShoppingItemLists.length);
 		
-		Object [] arrayOfShoppingAprioriTransacction = allUserSelectedShoppingItemLists.stream().map(ShoppingAprioriTransaction::new).toArray();
-		
-		for (Object shoppingAprioriTransactionItem : arrayOfShoppingAprioriTransacction) {
-			shoppingAprioriTransactionsArrayList.add((ShoppingAprioriTransaction)shoppingAprioriTransactionItem);
+		for (UserSelectedShoppingItems userSelectedShoppingItems : allUserSelectedShoppingItemLists) {
+			shoppingAprioriTransactionsArrayList.add(new ShoppingAprioriTransaction(userSelectedShoppingItems));
 		}
 		
 		double minSupport = 0.5;
 		double minConfidence = 0.95;
 		int ruleCount = 15;
-		Apriori<Item> apriori = new Apriori.Builder<Item>(minSupport).generateRules(minConfidence).confidenceDelta(0.1).create();
+		Apriori<Item> apriori = new Apriori.Builder<Item>(minSupport).generateRules(ruleCount).minConfidence(minConfidence).confidenceDelta(0.1).create();
 		
 		ShoppingAprioriDataIterable shoppingAprioriDataIterable = new ShoppingAprioriDataIterable(
 				shoppingAprioriTransactionsArrayList);

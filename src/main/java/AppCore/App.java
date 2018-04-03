@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.bson.Document;
 
+import DataMining.MongoDBCollectionFilter;
 import DataMining.MongoDBDocumentCompatibleObject;
 import DataMining.MongoDBManager;
 import freemarker.template.TemplateException;
@@ -54,6 +55,10 @@ public class App {
 	
 	public static Document [] getAllDocumentsFromCollection() {
 		return mongoDBConnector.getAllDocumentsFromCollection(predictionAppConfig.getMongodbCollectionName());
+	}
+	
+	public static Document [] getAllDocumentsFromCollection(MongoDBCollectionFilter filter) {
+		return mongoDBConnector.getAllDocumentsFromCollection(predictionAppConfig.getMongodbCollectionName(), filter);
 	}
 
 	

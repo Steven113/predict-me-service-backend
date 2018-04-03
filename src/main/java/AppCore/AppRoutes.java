@@ -10,6 +10,7 @@ import java.util.Map;
 
 import DataMining.AssociationRuleGenerator;
 import DataMining.FrequentItemSetGenerator;
+import DataMining.MongoDBCollectionFilter;
 import de.mrapp.apriori.FrequentItemSets;
 import de.mrapp.apriori.Item;
 import de.mrapp.apriori.RuleSet;
@@ -55,28 +56,30 @@ public class AppRoutes {
 		
 		App.putObjectInMongoDBCollection(userSelectedShoppingItems);
 		
-		UserSelectedShoppingItems [] userSelectedShoppingItemsFromDB = userSelectedShoppingItemsFactory.getArrayOfUserSelectedShoppingItemsFromArrayOfDocuments(App.getAllDocumentsFromCollection());
+		MongoDBCollectionFilter mongoDBCollectionFilter = ShoppingItemListFilterGenerator.generateBsonFilterDocumentForShoppingList(userSelectedShoppingItems);
+		
+		UserSelectedShoppingItems [] userSelectedShoppingItemsFromDB = userSelectedShoppingItemsFactory.getArrayOfUserSelectedShoppingItemsFromArrayOfDocuments(App.getAllDocumentsFromCollection(mongoDBCollectionFilter));
 		
 		LinkedList<UserSelectedShoppingItems> userSelectedShoppingItemsFromDBAsList = new LinkedList(Arrays.asList(userSelectedShoppingItemsFromDB));
 		
-		frequentItemSetGenerator.updateFrequentItemSets(userSelectedShoppingItemsFromDBAsList);
+		//frequentItemSetGenerator.updateFrequentItemSets(userSelectedShoppingItemsFromDBAsList.toArray(new UserSelectedShoppingItems[0]));
 		
-		FrequentItemSets<Item> frequentItemSets = frequentItemSetGenerator.getFrequentItemSets();
+		//FrequentItemSets<Item> frequentItemSets = frequentItemSetGenerator.getFrequentItemSets();
 		
-		associationRuleGenerator.updateAssociationRules(userSelectedShoppingItemsFromDBAsList);
+		associationRuleGenerator.updateAssociationRules(userSelectedShoppingItemsFromDBAsList.toArray(new UserSelectedShoppingItems[0]));
 		
 		RuleSet<Item> associationRules = associationRuleGenerator.getAssociationRules();
 		
 		PredictionAppConfig predictionAppConfig = App.getPredictionAppConfig();
 		
-		FrequentlyPurchasedShoppingItemSet [] frequentlyPurchasedShoppingItemSets = FrequentlyPurchasedShoppingItemSetFactory.generateFrequentlyPurchasedShoppingItemSet(frequentItemSets);
+		//FrequentlyPurchasedShoppingItemSet [] frequentlyPurchasedShoppingItemSets = FrequentlyPurchasedShoppingItemSetFactory.generateFrequentlyPurchasedShoppingItemSet(frequentItemSets);
 		
 		AssociationRuleForShoppingItems [] associationRulesForShoppingItemSets = AssociationRuleForShoppingItemsFactory.generateAssociationRulesForShoppingItemSets(associationRules);
 		
 		Map values = new HashMap();
     	values.put("ip", predictionAppConfig.getServerIP());
     	values.put("port", Integer.toString(predictionAppConfig.getPortToRunServerOn()));
-    	values.put("frequentItemSets", frequentlyPurchasedShoppingItemSets);
+    	//values.put("frequentItemSets", frequentlyPurchasedShoppingItemSets);
 		values.put("associationRules", associationRulesForShoppingItemSets);
     	
     	try {

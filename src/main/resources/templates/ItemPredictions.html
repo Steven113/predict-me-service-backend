@@ -7,28 +7,6 @@
 <body>
 	<h1>Items people usually buy</h1>
 	<h2>Items frequently brought together</h2>
-	<#if frequentItemSets?size==0>
-		No information is available right now.
-	<#else>
-		<ul>
-		<#list frequentItemSets as frequentItemSet>
-			
-			<#if (frequentItemSet.hasMoreThanOneItem())>
-				<li>
-					<#if frequentItemSet.hasValidDay()>
-						<b>
-							${frequentItemSet.getDayOfWeek()}:
-						</b>
-					</#if>
-					<#list frequentItemSet.getChosenItems() as item>
-						${item}
-					</#list>
-				</li>
-				<br>
-			</#if>
-		</#list>
-		</ul>
-	</#if>
 	<h2>Some recommendations for you:</h2><br>
 	<#if associationRules?size==0>
 		No recommendations are available right now.

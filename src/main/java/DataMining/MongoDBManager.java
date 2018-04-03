@@ -1,8 +1,8 @@
 package DataMining;
 import java.util.HashMap;
 import java.util.LinkedList;
-
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
@@ -41,6 +41,23 @@ public class MongoDBManager {
 		
 		//frustratingly convoluted way to put documents into LinkedList
 		collectionDocuments.find().forEach(new Block<Document>() {
+		       @Override
+		       public void apply(final Document document) {
+		    	   documentsInCollection.add(document);
+		       }
+		});
+		
+		return documentsInCollection.toArray(new Document[0]);
+		
+	}
+	
+	public Document [] getAllDocumentsFromCollection(String collectionName, Bson filterDocument) {
+		LinkedList<Document> documentsInCollection = new LinkedList<>();
+		
+		MongoCollection<Document> collectionDocuments = getCollectionFromDatabase(collectionName);
+		
+		//frustratingly convoluted way to put documents into LinkedList
+		collectionDocuments.find(filterDocument).forEach(new Block<Document>() {
 		       @Override
 		       public void apply(final Document document) {
 		    	   documentsInCollection.add(document);
