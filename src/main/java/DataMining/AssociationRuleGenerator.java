@@ -61,7 +61,7 @@ private MessageDigest digest = null;
 		double minSupport = 0.5;
 		double minConfidence = 0.95;
 		int ruleCount = 15;
-		Apriori<Item> apriori = new Apriori.Builder<Item>(minSupport).generateRules(ruleCount).minConfidence(minConfidence).confidenceDelta(0.1).create();
+		Apriori<Item> apriori = new Apriori.Builder<Item>(minSupport).generateRules(ruleCount).confidenceDelta(0.1).create();
 		
 		ShoppingAprioriDataIterable shoppingAprioriDataIterable = new ShoppingAprioriDataIterable(
 				shoppingAprioriTransactionsArrayList);

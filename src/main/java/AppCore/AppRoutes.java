@@ -56,9 +56,9 @@ public class AppRoutes {
 		
 		App.putObjectInMongoDBCollection(userSelectedShoppingItems);
 		
-		MongoDBCollectionFilter mongoDBCollectionFilter = ShoppingItemListFilterGenerator.generateBsonFilterDocumentForShoppingList(userSelectedShoppingItems);
+		//MongoDBCollectionFilter mongoDBCollectionFilter = ShoppingItemListFilterGenerator.generateBsonFilterDocumentForShoppingList(userSelectedShoppingItems);
 		
-		UserSelectedShoppingItems [] userSelectedShoppingItemsFromDB = userSelectedShoppingItemsFactory.getArrayOfUserSelectedShoppingItemsFromArrayOfDocuments(App.getAllDocumentsFromCollection(mongoDBCollectionFilter));
+		UserSelectedShoppingItems [] userSelectedShoppingItemsFromDB = userSelectedShoppingItemsFactory.getArrayOfUserSelectedShoppingItemsFromArrayOfDocuments(App.getAllDocumentsFromCollection());
 		
 		LinkedList<UserSelectedShoppingItems> userSelectedShoppingItemsFromDBAsList = new LinkedList(Arrays.asList(userSelectedShoppingItemsFromDB));
 		
