@@ -10,7 +10,7 @@ To run the server you must navigate to the built JAR (by default it is in the ta
 
 java -jar "predict-me-service-backend-0.0.1-SNAPSHOT-jar-with-dependencies.jar" [args]
 
-Where the args are:
+Where the args are:  
 -serverIP [IP you will run server on]  
 -port [port server must run on]  
 -pathToTemplateDirectory [location of folder with template html files for Freemarker]  
