@@ -1,3 +1,4 @@
+package MongoDBDocumentProcessingTests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.security.MessageDigest;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import AppCore.UserSelectedShoppingItems;
 import AppCore.UserSelectedShoppingItemsFactory;
 
-class TestMongoDBDocumentConversions {
+class MongoDBDocumentConversionsTest {
 	
 	@Test
 	void testConversionBetweenObjectsAndMongoDBDocuments() {
