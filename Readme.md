@@ -11,14 +11,14 @@ To run the server you must navigate to the built JAR (by default it is in the ta
 java -jar "predict-me-service-backend-0.0.1-SNAPSHOT-jar-with-dependencies.jar" [args]
 
 Where the args are:
--serverIP [IP you will run server on]
--port [port server must run on]
--pathToTemplateDirectory [location of folder with template html files for Freemarker]
--pathToAllowedShoppingItems [Location of file defining possible items]
--mongodbhost [IP of mongodb server to connect to]
--mongodbport [port of mongodb server to connect to] 
--mongodbDatabaseName [mongodb database to use]
--mongodbCollectionName [collection within mongodb database]
+-serverIP [IP you will run server on]  
+-port [port server must run on]  
+-pathToTemplateDirectory [location of folder with template html files for Freemarker]  
+-pathToAllowedShoppingItems [Location of file defining possible items]  
+-mongodbhost [IP of mongodb server to connect to]  
+-mongodbport [port of mongodb server to connect to]  
+-mongodbDatabaseName [mongodb database to use]  
+-mongodbCollectionName [collection within mongodb database]  
 
 *pathToTemplateDirectory* and *pathToAllowedShoppingItems* should be specified in terms of where the files are *when developing*.
 
