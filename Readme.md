@@ -20,7 +20,9 @@ Where the args are:
 -mongodbDatabaseName [mongodb database to use]  
 -mongodbCollectionName [collection within mongodb database]  
 
-*pathToTemplateDirectory* and *pathToAllowedShoppingItems* should be specified in terms of where the files are *when developing*.
+*pathToTemplateDirectory* and *pathToAllowedShoppingItems* should be specified in terms of where the files are *when developing*.  
+
+All of these arguments are required.
 
 ## Loading Testing Data
 
