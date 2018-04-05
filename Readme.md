@@ -37,14 +37,18 @@ var genericShoppingListForWeek = generateGenericShoppingListForWeek();
   
 And then you can invoke the following function:  
 populateCollectionWithDocuments(collectionPointer, documents);  
+
 You can then run:  
 populateCollectionWithDocuments(db.ShoppingListDocument, vegetarianShoppingListForWeek);  
-to add the vegetarian shopping list. You can then run: 
+
+...to add the vegetarian shopping list. You can then run: 
 populateCollectionWithDocuments(db.ShoppingListDocument, genericShoppingListForWeek);  
-To load the generic shopping list. Alternatively you can be more direct and just run:  
+
+...to load the generic shopping list. Alternatively you can be more direct and just run:  
 populateCollectionWithDocuments(db.ShoppingListDocument, generateVegetarianShoppingListForWeek());  
 And/or:  
 populateCollectionWithDocuments(db.ShoppingListDocument, generateGenericShoppingListForWeek());  
+
 Note that these data-generation functions will create **seven** shopping lists, one per day of the week.
 
 ## Performance Issues
