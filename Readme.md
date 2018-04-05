@@ -1,5 +1,5 @@
 # Predict-Me Service
-A Spark/Java based service for trying to predict a user's shopping list based on a few entered items, using the Apriori algorithm.
+A Spark/Java based service where users can enter a shopping list which will be loaded to a MongoDB collection. The user will then get recommendations mined from the database data.
 
 ## Building and Running (Maven)
 The Maven pom.xml file is configured so that all the code will be exported into a executable (fat) jar for the server. Everything is in the jar so that you can just run the server.
@@ -21,6 +21,31 @@ Where the args are:
 -mongodbCollectionName [collection within mongodb database]  
 
 *pathToTemplateDirectory* and *pathToAllowedShoppingItems* should be specified in terms of where the files are *when developing*.
+
+## Loading Testing Data
+
+The MongoDB console lets you load external Javascript. I have created the code to auto-populate the database with a "generic" shopping list or a vegetarian shopping list. In your MongoDB console, enter the following:  
+load([path to MongoDBDocumentPopulationUtils.js]);  
+load([path to GenerateVegetarianPurchases.js]);  
+load([path to GenerateGenericShoppingLists.js]);  
+
+You can then generate a set of shopping lists (array of documents) with:
+
+var vegetarianShoppingListForWeek = generateVegetarianShoppingListForWeek();  
+OR  
+var genericShoppingListForWeek = generateGenericShoppingListForWeek();  
+  
+And then you can invoke the following function:  
+populateCollectionWithDocuments(collectionPointer, documents);  
+You can then run:  
+populateCollectionWithDocuments(db.ShoppingListDocument, vegetarianShoppingListForWeek);  
+to add the vegetarian shopping list. You can then run: 
+populateCollectionWithDocuments(db.ShoppingListDocument, genericShoppingListForWeek);  
+To load the generic shopping list. Alternatively you can be more direct and just run:  
+populateCollectionWithDocuments(db.ShoppingListDocument, generateVegetarianShoppingListForWeek());  
+And/or:  
+populateCollectionWithDocuments(db.ShoppingListDocument, generateGenericShoppingListForWeek());  
+Note that these data-generation functions will create **seven** shopping lists, one per day of the week.
 
 ## Performance Issues
 The Apriori algorithm code takes forever to run for about just 10 000 items. I need to either find a better Apriori algorithm implementation, write a parallelized version of the current algorithm, find a way to run a script right on the MongoDB server (which includes getting a JS Apriori implementation). Feel free to suggest other performance improvement options.
