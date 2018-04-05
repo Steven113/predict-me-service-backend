@@ -44,7 +44,9 @@ populateCollectionWithDocuments(db.ShoppingListDocument, vegetarianShoppingListF
 ...to add the vegetarian shopping list. You can then run:  
 populateCollectionWithDocuments(db.ShoppingListDocument, genericShoppingListForWeek);  
 
-...to load the generic shopping list. Alternatively you can be more direct and just run:  
+...to load the generic shopping list.  
+
+Alternatively you can be more direct and just run:  
 populateCollectionWithDocuments(db.ShoppingListDocument, generateVegetarianShoppingListForWeek());  
 And/or:  
 populateCollectionWithDocuments(db.ShoppingListDocument, generateGenericShoppingListForWeek());  
