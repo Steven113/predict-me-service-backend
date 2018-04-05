@@ -41,7 +41,7 @@ populateCollectionWithDocuments(collectionPointer, documents);
 You can then run:  
 populateCollectionWithDocuments(db.ShoppingListDocument, vegetarianShoppingListForWeek);  
 
-...to add the vegetarian shopping list. You can then run: 
+...to add the vegetarian shopping list. You can then run:  
 populateCollectionWithDocuments(db.ShoppingListDocument, genericShoppingListForWeek);  
 
 ...to load the generic shopping list. Alternatively you can be more direct and just run:  
