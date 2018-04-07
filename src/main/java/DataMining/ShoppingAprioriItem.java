@@ -1,6 +1,12 @@
 package DataMining;
 import de.mrapp.apriori.Item;
 
+/**
+ * Implementation of Item interface for bridging between the app API
+ * and the Data Mining API
+ * @author Steven Tupper
+ *
+ */
 public class ShoppingAprioriItem implements Item {
 	
 	final String itemName;

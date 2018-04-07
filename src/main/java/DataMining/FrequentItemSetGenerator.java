@@ -13,7 +13,7 @@ import de.mrapp.apriori.Output;
 import de.mrapp.apriori.Transaction;
 
 public class FrequentItemSetGenerator {
-	private MessageDigest digest = null;
+	private MessageDigest digestForHashingDataUsingSHA256 = null;
 
 	private String hashOfCurrentData = "";
 
@@ -21,7 +21,7 @@ public class FrequentItemSetGenerator {
 
 	private void generateSHA256Digest() {
 		try {
-			digest = MessageDigest.getInstance("SHA-256");
+			digestForHashingDataUsingSHA256 = MessageDigest.getInstance("SHA-256");
 		} catch (NoSuchAlgorithmException e) {
 			System.out.println("Faild to locate SHA-256 hash digest.");
 			e.printStackTrace();
@@ -39,18 +39,28 @@ public class FrequentItemSetGenerator {
 	}
 
 	public void updateFrequentItemSets(UserSelectedShoppingItems [] allUserSelectedShoppingItemLists) {
-		digest.reset();
+		digestForHashingDataUsingSHA256.reset();
 
-		byte[] hashBytes = digest.digest((allUserSelectedShoppingItemLists).toString().getBytes());
+		byte[] hashBytes = digestForHashingDataUsingSHA256.digest((allUserSelectedShoppingItemLists).toString().getBytes());
 
 		String hashOfNewData = new String(hashBytes);
 
+		/*
+		 * if the hash is the same as the old hash -> the data has not changed ->
+		 * Don't recalculate frequent item sets
+		 */
+		
 		if (hashOfNewData.equals(hashOfCurrentData)) {
 			return;
 		} else {
 			hashOfCurrentData = new String(hashOfNewData);
 		}
 
+		/*
+		 * The next steps are essentially copy-pasted from the tutorial of the Data Mining library
+		 * There is not much to explain - it's just how the library author decided
+		 * things should be done
+		 */
 		ArrayList<Transaction<Item>> shoppingAprioriTransactionsArrayList = new ArrayList<Transaction<Item>>(
 				allUserSelectedShoppingItemLists.length);
 		

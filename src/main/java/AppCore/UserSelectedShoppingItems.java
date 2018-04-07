@@ -1,7 +1,5 @@
 package AppCore;
-import java.sql.Date;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -20,7 +18,7 @@ public class UserSelectedShoppingItems implements MongoDBDocumentCompatibleObjec
 			chosenItems.add(item);
 		}
 		
-		dayOfWeek = DayOfWeek.getDayOfWeek(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
+		dayOfWeek = DayOfWeek.getDayOfWeekFromInt(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
 	}
 	
 	public UserSelectedShoppingItems(HashSet<String> itemCounts) {

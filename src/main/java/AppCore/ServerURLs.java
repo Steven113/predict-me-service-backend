@@ -1,5 +1,10 @@
 package AppCore;
 
+/**
+ * Heirarchy of path data constants created using nested classes
+ * @author Steven Tupper
+ *
+ */
 public class ServerURLs {
 	public static class Web {
 		final static String WELCOME_PAGE = "/welcomePage";

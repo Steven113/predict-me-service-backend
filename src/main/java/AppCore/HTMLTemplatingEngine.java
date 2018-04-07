@@ -16,13 +16,13 @@ import freemarker.template.TemplateExceptionHandler;
 
 public class HTMLTemplatingEngine {
 
-	final Configuration cfg;
+	final Configuration configurationOfHTMLTemplatingEngine;
 	
 	public HTMLTemplatingEngine(String pathToTemplateDirectory) {
 		// Create your Configuration instance, and specify if up to what FreeMarker
 		// version (here 2.3.27) do you want to apply the fixes that are not 100%
 		// backward-compatible. See the Configuration JavaDoc for details.
-		cfg = new Configuration();
+		configurationOfHTMLTemplatingEngine = new Configuration();
 
 		// Specify the source where the template files come from. Here I set a
 		// plain directory for it, but non-file-system sources are possible too:
@@ -33,7 +33,7 @@ public class HTMLTemplatingEngine {
 			
 			System.out.println(fParentDir.getCanonicalPath() + " " + fParentDir.exists());
 			
-			cfg.setDirectoryForTemplateLoading(new File(pathToTemplateDirectory));
+			configurationOfHTMLTemplatingEngine.setDirectoryForTemplateLoading(new File(pathToTemplateDirectory));
 		} catch (IOException e) {
 			System.out.println("Failure to configure FreeMarker templating. Exiting program");
 			e.printStackTrace();
@@ -42,11 +42,11 @@ public class HTMLTemplatingEngine {
 
 		// Set the preferred charset template files are stored in. UTF-8 is
 		// a good choice in most applications:
-		cfg.setDefaultEncoding("UTF-8");
+		configurationOfHTMLTemplatingEngine.setDefaultEncoding("UTF-8");
 
 		// Sets how errors will appear.
 		// During web page *development* TemplateExceptionHandler.HTML_DEBUG_HANDLER is better.
-		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+		configurationOfHTMLTemplatingEngine.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 		
 		System.out.println("Finished configuring freemarker template");
 	}
@@ -55,7 +55,7 @@ public class HTMLTemplatingEngine {
 	public String generateTemplatedHTML(String templatePath, Map values) throws TemplateException, IOException {
 		Map root = new HashMap(values);
         
-        Template temp = cfg.getTemplate(templatePath);
+        Template temp = configurationOfHTMLTemplatingEngine.getTemplate(templatePath);
 
         /* Merge data-model with template */
         Writer out = new StringWriter();

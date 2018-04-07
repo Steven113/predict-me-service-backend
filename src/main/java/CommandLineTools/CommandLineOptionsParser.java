@@ -15,7 +15,9 @@ public class CommandLineOptionsParser {
 		HashMap<String, LinkedList<String>> parsedOptionMapping = new HashMap<String, LinkedList<String>>();
 		
 		for (int index = 0; index<args.length; ++index) {
-			if (args[index].startsWith("-")) {
+			if (args[index].startsWith("-")) { //if this is a variable name (variable name starts with "-"
+				//iterate to the next variable name. until we get to the next variable name, the parameter is a argument for the current variable
+				
 				String optionVariableName = (args[index]).replaceFirst("-", "");
 				
 				parsedOptionMapping.put(optionVariableName, new LinkedList<String>());

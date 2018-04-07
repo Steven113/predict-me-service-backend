@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.bson.Document;
 
-import DataMining.MongoDBCollectionFilter;
 import DataMining.MongoDBDocumentCompatibleObject;
 import DataMining.MongoDBManager;
 import freemarker.template.TemplateException;
@@ -20,8 +19,15 @@ public class App {
 	
     public static void main(String[] args) {
     	
+    	/*
+    	 * Generate configuration information from command line arguments
+    	 */
     	predictionAppConfig = new PredictionAppConfig(args);
     	
+    	/*
+    	 * Check configuration occurred correctly, terminate program if
+    	 * the config failed
+    	 */
     	if (!predictionAppConfig.appArgsAreValid()) {
     		System.out.println("Error generated when configuring app.");
     		return;
@@ -29,8 +35,10 @@ public class App {
     		System.out.println("App config successful");
     	}
     	
+    	//get connection to mongodb instance
     	mongoDBConnector = new MongoDBManager(predictionAppConfig.getMongoDBHost(), predictionAppConfig.getMongoDBPort(), predictionAppConfig.getMongodbDatabaseName());
     	
+    	//set up public folder for retrieving resources from server
     	staticFiles.location("/public");
     	staticFiles.expireTime(600L);
     	
@@ -53,13 +61,10 @@ public class App {
 		mongoDBConnector.insertObjectIntoCollectionAsObject(predictionAppConfig.getMongodbCollectionName(), object);
 	}
 	
-	public static Document [] getAllDocumentsFromCollection() {
+	public static Document [] getAllDocumentsFromMongoDBCollection() {
 		return mongoDBConnector.getAllDocumentsFromCollection(predictionAppConfig.getMongodbCollectionName());
 	}
 	
-	public static Document [] getAllDocumentsFromCollection(MongoDBCollectionFilter filter) {
-		return mongoDBConnector.getAllDocumentsFromCollection(predictionAppConfig.getMongodbCollectionName(), filter);
-	}
 
 	
 }

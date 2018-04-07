@@ -7,7 +7,7 @@ import java.util.Iterator;
 import de.mrapp.apriori.Item;
 import de.mrapp.apriori.ItemSet;
 
-public class FrequentlyPurchasedShoppingItemSet implements Iterable {
+public class FrequentlyPurchasedShoppingItemSet implements Iterable<String> {
 	
 	private HashSet<String> chosenItems = new HashSet<>();
 	
@@ -49,7 +49,7 @@ public class FrequentlyPurchasedShoppingItemSet implements Iterable {
 	}
 
 	@Override
-	public Iterator iterator() {
+	public Iterator<String> iterator() {
 		// TODO Auto-generated method stub
 		return chosenItems.iterator();
 	}

@@ -1,23 +1,22 @@
 package MongoDBDocumentProcessingTests;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.security.MessageDigest;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Random;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 import AppCore.UserSelectedShoppingItems;
 import AppCore.UserSelectedShoppingItemsFactory;
 
-class MongoDBDocumentConversionsTest {
+public class TestMongoDBDocumentConversions {
 	
+	/**
+	 * Generates random test documents and converts them to and from the Document format 
+	 * to ensure the conversion is correct.
+	 */
 	@Test
-	void testConversionBetweenObjectsAndMongoDBDocuments() {
+	public void testConversionBetweenObjectsAndMongoDBDocuments() {
 		RandomStringGenerator randomStringGenerator = new RandomStringGenerator("0");
-		Random random = new Random(0);
 		
 		UserSelectedShoppingItemsFactory userSelectedShoppingItemsFactory = new UserSelectedShoppingItemsFactory();
 		
@@ -34,7 +33,7 @@ class MongoDBDocumentConversionsTest {
 				
 				UserSelectedShoppingItems userSelectedShoppingItemsRetrievedFromDocument = userSelectedShoppingItemsFactory.generateObjectFromDocument(userSelectedShoppingItems.generateMongoDBDocumentFromObject());
 				
-				Assert.assertTrue("Purchased item lists are not equal", userSelectedShoppingItems.equals(userSelectedShoppingItemsRetrievedFromDocument));
+				assertTrue("Purchased item lists are not equal",userSelectedShoppingItems.equals(userSelectedShoppingItemsRetrievedFromDocument));
 			}
 		}
 		

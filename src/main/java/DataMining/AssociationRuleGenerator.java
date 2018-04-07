@@ -14,7 +14,7 @@ import de.mrapp.apriori.Transaction;
 
 public class AssociationRuleGenerator {
 	
-private MessageDigest digest = null;
+	private MessageDigest digestForHashingDataUsingSHA256 = null;
 	
 	private String hashOfCurrentData = "";
 	
@@ -22,7 +22,7 @@ private MessageDigest digest = null;
 	
 	private void generateSHA256Digest() {
 		try {
-			digest = MessageDigest.getInstance("SHA-256");
+			digestForHashingDataUsingSHA256 = MessageDigest.getInstance("SHA-256");
 		} catch (NoSuchAlgorithmException e) {
 			System.out.println("Faild to locate SHA-256 hash digest.");
 			e.printStackTrace();
@@ -39,11 +39,16 @@ private MessageDigest digest = null;
 	}
 	
 	public void updateAssociationRules(UserSelectedShoppingItems [] allUserSelectedShoppingItemLists) {
-		digest.reset();
+		digestForHashingDataUsingSHA256.reset();
 		
-		byte [] hashBytes = digest.digest((allUserSelectedShoppingItemLists).toString().getBytes());
+		byte [] hashBytes = digestForHashingDataUsingSHA256.digest((allUserSelectedShoppingItemLists).toString().getBytes());
 		
 		String hashOfNewData = new String(hashBytes);
+		
+		/*
+		 * if the hash is the same as the old hash -> the data has not changed ->
+		 * Don't recalculate association rules
+		 */
 		
 		if (hashOfNewData.equals(hashOfCurrentData)) {
 			return;
@@ -57,6 +62,12 @@ private MessageDigest digest = null;
 		for (UserSelectedShoppingItems userSelectedShoppingItems : allUserSelectedShoppingItemLists) {
 			shoppingAprioriTransactionsArrayList.add(new ShoppingAprioriTransaction(userSelectedShoppingItems));
 		}
+		
+		/*
+		 * The next steps are essentially copy-pasted from the tutorial of the Data Mining library
+		 * There is not much to explain - it's just how the library author decided
+		 * things should be done
+		 */
 		
 		double minSupport = 0.5;
 		double minConfidence = 0.95;

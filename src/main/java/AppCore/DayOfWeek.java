@@ -5,7 +5,7 @@ public enum DayOfWeek {
 	
 	static DayOfWeek [] orderOfDaysInWeek = new DayOfWeek[] {Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday};
 	
-	static DayOfWeek getDayOfWeek(int dayOfWeekInt) {
+	static DayOfWeek getDayOfWeekFromInt(int dayOfWeekInt) {
 		if (dayOfWeekInt >=0 && dayOfWeekInt < 7) {
 			return orderOfDaysInWeek[dayOfWeekInt];
 		}

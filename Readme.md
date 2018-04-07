@@ -76,6 +76,5 @@ rules.
 ## TODO
 
 1. Tailoring how to limit DB size by culling old/unnecessary entries
-2. Integrate testing into Maven build
 3. Proper comments and documentation
 4. Fix performance issues
